@@ -1,0 +1,53 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="robot_name"      default="robot" />
+
+    <arg name="pose_x"          default="6" />      
+    <arg name="pose_y"          default="6.6" />    
+    <arg name="pose_z"          default="0.84" />   
+    <arg name="pose_yaw"        default="1.5708" />
+
+    <!-- <arg name="pose_x"          default="9.5" />   
+    <arg name="pose_y"          default="11" />    
+    <arg name="pose_z"          default="0.6" />   
+    <arg name="pose_yaw"        default="-1.5708" /> -->
+
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="sim"             default="false" doc="If true, bring up the fake depth camera."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+    <arg name="debug"           default="false" />
+    <arg name="open_rviz"       default="true" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Individual model -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_manipulators)/launch/indivi_manipulator_gazebo.launch" >
+        <arg name="robot_name"      value="$(arg robot_name)" />
+        <arg name="pose_x"          value="$(arg pose_x)" />
+        <arg name="pose_y"          value="$(arg pose_y)" />
+        <arg name="pose_z"          value="$(arg pose_z)" />
+        <arg name="pose_yaw"        value="$(arg pose_yaw)" />
+        <arg name="joint_limited"   value="$(arg joint_limited)"/>
+        <arg name="sim"             value="$(arg sim)"/>
+        <arg name="gripper"         value="$(arg gripper)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Manipulation -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_manipulators)/launch/indivi_manipulator_planning_execution.launch" >
+        <arg name="joint_limited"   value="$(arg joint_limited)"  />
+        <arg name="gripper"         value="$(arg gripper)" />
+        <arg name="robot_name"      value="$(arg robot_name)"/>
+        <arg name="open_rviz"       value="$(arg open_rviz)"/>
+        <arg name="debug"           default="$(arg debug)" />
+    </include>
+    <!-- ******************************************************************************** -->
+
+</launch>

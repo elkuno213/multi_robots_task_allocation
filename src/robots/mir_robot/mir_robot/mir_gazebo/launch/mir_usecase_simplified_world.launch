@@ -1,0 +1,33 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="world_name"  default="$(find usecase_gazebo)/worlds/usecase_simplified.world"/>
+    <arg name="paused"      default="true" doc="Starts gazebo in paused mode"/>
+    <arg name="gui"         default="true" doc="Starts gazebo gui"/>
+
+    <arg name="pose_x"      default="1.0" />
+    <arg name="pose_y"      default="1.0" />
+    <arg name="pose_yaw"    default="0.0" />
+
+    <arg name="robot_name"  default="robot" />
+    <arg name="prefix"      default="mir_" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Include empty world -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find mir_gazebo)/launch/mir_empty_world.launch">
+        <arg name="world_name"  value="$(arg world_name)"/>
+        <arg name="paused"      value="$(arg paused)" />
+        <arg name="gui"         value="$(arg gui)" />
+        <arg name="pose_x"      value="$(arg pose_x)" />
+        <arg name="pose_y"      value="$(arg pose_y)" />
+        <arg name="pose_yaw"    value="$(arg pose_yaw)" />
+        <arg name="robot_name"  value="$(arg robot_name)" />
+        <arg name="prefix"      value="$(arg prefix)" />
+    </include>
+    <!-- ******************************************************************************** -->
+
+</launch>

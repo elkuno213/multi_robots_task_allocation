@@ -1,0 +1,46 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="robot_name"      default="robot" />
+    <arg name="tf_prefix"       default="$(arg robot_name)_tf/" />
+
+    <arg name="map_topic"       default="/map"/>
+    <arg name="b_scan_topic"    default="/mir/b_scan_rep117"/>
+    <arg name="f_scan_topic"    default="/mir/f_scan_rep117"/>
+    <arg name="cmd_vel_topic"   default="/mir_controller/cmd_vel"/>
+    <arg name="odom_comb_topic" default="/mir/odom_comb"/>
+    <arg name="marker_topic"    default="/move_base_node/DWBLocalPlanner/markers"/>
+
+    <arg name="local_planner"   default="eband"/>
+
+    <arg name="odom_frame_id"   default="$(arg tf_prefix)mir_odom_comb"/>
+    <arg name="base_frame_id"   default="$(arg tf_prefix)mir_base_footprint"/>
+    <arg name="global_frame_id" default="map"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- move_base_node -->
+    <!-- ******************************************************************************** -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+        <param name="SBPLLatticePlanner/primitive_filename" value="$(find mir_navigation)/mprim/unicycle_highcost_5cm.mprim" />
+        <rosparam file="$(find mir_navigation)/config/move_base_common_params.yaml" command="load" />
+        <rosparam file="$(find mir_navigation)/config/sbpl_global_params.yaml" command="load" />
+        <rosparam file="$(find mir_navigation)/config/$(arg local_planner)_local_planner_params.yaml" command="load" />
+        <!-- global costmap params -->
+        <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" subst_value="true" />
+        <rosparam file="$(find mir_navigation)/config/costmap_global_params.yaml" command="load" subst_value="true" />
+        <rosparam file="$(find mir_navigation)/config/costmap_global_params_plugins.yaml" command="load" />
+        <!-- local costmap params -->
+        <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true" />
+        <rosparam file="$(find mir_navigation)/config/costmap_local_params.yaml" command="load" subst_value="true" />
+        <rosparam file="$(find mir_navigation)/config/costmap_local_params_plugins.yaml" command="load" />
+        <remap from="map"       to="$(arg map_topic)" />
+        <remap from="cmd_vel"   to="$(arg cmd_vel_topic)" />
+        <remap from="odom"      to="$(arg odom_comb_topic)" />
+        <remap from="marker"    to="$(arg marker_topic)" />
+    </node>
+    <!-- ******************************************************************************** -->
+
+</launch>

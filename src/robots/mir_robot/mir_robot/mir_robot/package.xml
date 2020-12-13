@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mir_robot</name>
+  <version>0.0.0</version>
+  <description>
+    URDF description, Gazebo simulation, SLAM, navigation, bringup launch files, message and action descriptions for the MiR100 robot.
+  </description>
+
+  <maintainer email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</maintainer>
+  <author email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</author>
+
+  <license>TODO</license>
+
+  <url type="website">https://github.com/huynhvuh/multi_robots_task_allocation</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>mir_actions</exec_depend>
+  <exec_depend>mir_description</exec_depend>
+  <exec_depend>mir_driver</exec_depend>
+  <exec_depend>mir_dwb_critics</exec_depend>
+  <exec_depend>mir_gazebo</exec_depend>
+  <exec_depend>mir_msgs</exec_depend>
+  <exec_depend>mir_navigation</exec_depend>
+  <exec_depend>mir_slam</exec_depend>
+  <exec_depend>multi_mirs</exec_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

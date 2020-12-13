@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>mrta</name>
+    <version>0.0.0</version>
+    <description>The mrta package</description>
+
+    <maintainer email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</maintainer>
+    <author email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</author>
+
+    <license>TODO</license>
+
+    <url type="website">https://github.com/huynhvuh/multi_robots_task_allocation</url>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>rospy</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <build_depend>message_generation</build_depend>
+    <build_export_depend>rospy</build_export_depend>
+    <build_export_depend>roscpp</build_export_depend>
+    <build_export_depend>std_msgs</build_export_depend>
+    <exec_depend>rospy</exec_depend>
+    <exec_depend>moveit_commander</exec_depend>
+    <exec_depend>message_runtime</exec_depend>
+
+	<export>
+	</export>
+</package>

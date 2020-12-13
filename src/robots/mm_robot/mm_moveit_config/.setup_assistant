@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: mm_description
+    relative_path: urdf/mm_for_only_mm.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/mm.srdf
+  CONFIG:
+    author_name: Vu Hoi HUYNH
+    author_email: vuhoi.huynh@gmail.com
+    generated_timestamp: 1592935180

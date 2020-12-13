@@ -1,0 +1,285 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='usecase_simplified'>
+    <static>1</static>
+    <link name='usecase_simplified'>
+
+      <!-- wall -->
+      <collision name='wall'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/wall/wall.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='wall'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/wall/wall.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>PR2/White</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- AP_simplified -->
+      <collision name='AP_simplified'>
+        <pose>5.9 3.2 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/AP/AP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='AP_simplified'>
+        <pose>5.9 3.2 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/AP/AP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- stock -->
+      <collision name="stock">
+        <pose>6.3775 6.625 0.415 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>2.41 0.75 0.83</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="stock">
+        <pose>6.3775 6.625 0.415 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>2.41 0.75 0.83</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/ZincYellow</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Load MP1_simplified -->
+      <collision name='MP1_simplified'>
+        <pose>9.51 9.3 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='MP1_simplified'>
+        <pose>9.51 9.3 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>PR2/White</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Load MP2_simplified -->
+      <collision name='MP2_simplified'>
+        <pose>9.51 12.7 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='MP2_simplified'>
+        <pose>9.51 12.7 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>PR2/White</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Load MP3_simplified -->
+      <collision name='MP3_simplified'>
+        <pose>2.51 12.7 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='MP3_simplified'>
+        <pose>2.51 12.7 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>PR2/White</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Load MP4_simplified -->
+      <collision name='MP4_simplified'>
+        <pose>2.51 9.3 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='MP4_simplified'>
+        <pose>2.51 9.3 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/MP/MP_simplified.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>PR2/White</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- stock12 -->
+      <collision name="stock12">
+        <pose>9.5 11.0 0.295 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.85 2.1 0.59</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="stock12">
+        <pose>9.5 11.0 0.295 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.85 2.1 0.59</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- stock34 -->
+      <collision name="stock34">
+        <pose>2.615 11 0.295 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.85 2.1 0.59</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="stock34">
+        <pose>2.615 11 0.295 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.85 2.1 0.59</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- obstacle_stock_AP -->
+      <collision name="obstacle_stock_AP">
+        <pose>7.2 5.3 0.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 1.8 0.2</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="obstacle_stock_AP">
+        <pose>7.2 5.3 0.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 1.8 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- obstacle_MP3_wall -->
+      <collision name="obstacle_MP3_wall">
+        <pose>2.615 14.2 0.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 1.7 0.2</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="obstacle_MP3_wall">
+        <pose>2.615 14.2 0.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 1.7 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+
+    </link>
+  </model>
+</sdf>

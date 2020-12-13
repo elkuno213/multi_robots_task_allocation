@@ -1,0 +1,52 @@
+<launch>
+
+	<!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="tf_prefix"          		default="" />
+    <arg name="joint_limited"      		default="true"      doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="gripper"            		default="1"         doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+	<arg name="only_multi"      		default="true"/>
+
+    <arg name="load_robot_description"  default="false" />
+    <arg name="robot_description" 		default="robot_description"/>
+    <!-- ******************************************************************************** -->
+
+
+
+	<!-- Load universal robot description format (URDF) -->
+    <!-- ******************************************************************************** -->
+	<group if="$(arg load_robot_description)">
+		<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mm_description)/urdf/mm_for_only_mm.urdf.xacro'
+			tf_prefix:=$(arg tf_prefix) joint_limited:=$(arg joint_limited) gripper:=$(arg gripper)" if="$(arg only_multi)"/>
+
+		<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mm_description)/urdf/mm_for_multi_mms.urdf.xacro'
+			tf_prefix:=$(arg tf_prefix) joint_limited:=$(arg joint_limited) gripper:=$(arg gripper)" unless="$(arg only_multi)"/>
+	</group>
+    <!-- ******************************************************************************** -->
+
+
+
+	<!-- The semantic description that corresponds to the URDF -->
+    <!-- ******************************************************************************** -->
+	<param name="$(arg robot_description)_semantic" textfile="$(find mm_moveit_config)/config/mm.srdf"/>
+    <!-- ******************************************************************************** -->
+
+
+
+	<!-- Load updated joint limits (override information from URDF) -->
+    <!-- ******************************************************************************** -->
+	<group ns="$(arg robot_description)_planning">
+		<rosparam command="load" file="$(find mm_moveit_config)/config/joint_limits.yaml" />
+	</group>
+    <!-- ******************************************************************************** -->
+
+
+
+	<!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
+    <!-- ******************************************************************************** -->
+	<group ns="$(arg robot_description)_kinematics">
+		<rosparam command="load" file="$(find mm_moveit_config)/config/kinematics.yaml"/>
+	</group>
+    <!-- ******************************************************************************** -->
+
+</launch>

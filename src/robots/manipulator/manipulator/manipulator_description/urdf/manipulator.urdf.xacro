@@ -1,0 +1,84 @@
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="manipulator">
+
+    <!-- Arguments and properties -->
+    <!-- ******************************************************************************** -->
+    <xacro:arg name="arm_prefix"            default="arm_"/>
+    <xacro:arg name="gripper_prefix"        default="gripper_"/>
+    <xacro:arg name="joint_limited"         default="true"/>
+    <xacro:arg name="gripper"               default="1"/>
+    <xacro:arg name="sim"                   default="false"/>
+    <xacro:property name="arm_prefix"       value="$(arg arm_prefix)"/>
+    <xacro:property name="gripper_prefix"   value="$(arg gripper_prefix)"/>
+    <xacro:property name="joint_limited"    value="$(arg joint_limited)"/>
+    <xacro:property name="gripper"          value="$(arg gripper)"/>
+    <xacro:property name="sim"              value="$(arg sim)"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- URDF of each component -->
+    <!-- ******************************************************************************** -->
+    <!-- common stuff -->
+    <xacro:include filename="$(find ur_description)/urdf/common.gazebo.xacro"/>
+
+    <!-- ur5 -->
+    <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro"/>
+
+    <!-- robotiq 2f 140 gripper -->
+    <xacro:if value="${gripper != 0}">
+        <xacro:include filename="$(find robotiq_2f_140_gripper_visualization)/urdf/robotiq_arg2f_140_model_macro.xacro"/>
+    </xacro:if>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- manipulator -->
+    <!-- ******************************************************************************** -->
+    <xacro:macro name="manipulator" params="arm_prefix gripper_prefix joint_limited gripper sim">
+
+        <!-- World -->
+        <link name="world"/>
+
+        <!-- arm_base joint -->
+        <joint name="${arm_prefix}base_joint" type="fixed">
+            <parent link="world"/>
+            <child link="${arm_prefix}base_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+        <!-- arm links -->
+        <xacro:unless value="${joint_limited}">
+            <xacro:ur5_robot prefix="${arm_prefix}" joint_limited="false"/>
+        </xacro:unless>
+        <xacro:if value="${joint_limited}">
+            <xacro:ur5_robot prefix="${arm_prefix}" joint_limited="true"
+                             shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
+                             shoulder_lift_lower_limit="${-pi}" shoulder_lift_upper_limit="${pi}"
+                             elbow_joint_lower_limit="${-pi}" elbow_joint_upper_limit="${pi}"
+                             wrist_1_lower_limit="${-pi}" wrist_1_upper_limit="${pi}"
+                             wrist_2_lower_limit="${-pi}" wrist_2_upper_limit="${pi}"
+                             wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"/>
+        </xacro:if>
+
+        <!-- Gripper links and joint -->
+        <xacro:if value="${gripper == 1}">
+            <xacro:robotiq_arg2f_140 prefix="gripper_"/>
+            <joint name="${gripper_prefix}left_joint" type="fixed">
+                <parent link="${arm_prefix}tool0"/>
+                <child link="${gripper_prefix}robotiq_arg2f_base_link"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </joint>
+        </xacro:if>
+
+        <!--Kinect links and joint -->
+        <xacro:if value="${sim}">
+            <!-- position of kinect has to be changed in common_sensors/urdf/sensors/kinect_properties.urdf.xacro-->
+            <xacro:include filename="$(find common_sensors)/urdf/sensors/kinect.urdf.xacro"/>
+            <xacro:sensor_kinect parent="${arm_prefix}base_link"/>
+        </xacro:if>
+    </xacro:macro>
+
+    <xacro:manipulator arm_prefix="${arm_prefix}" gripper_prefix="${gripper_prefix}" joint_limited="${joint_limited}" gripper="${gripper}" sim="${sim}"/>
+    <!-- ******************************************************************************** -->
+
+</robot>

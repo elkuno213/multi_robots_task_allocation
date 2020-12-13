@@ -1,0 +1,21 @@
+<launch>
+
+    <!-- Arguments -->
+    <!-- ******************************************************************************** -->
+	<arg name="only_multi"  default="true" doc="true for only one mir / false for multiple mirs"/>
+	<arg name="prefix"      default="" />
+	<arg name="tf_prefix"   default="" />
+    <!-- ******************************************************************************** -->
+	
+
+
+    <!-- Parameter robot_description -->
+    <!-- ******************************************************************************** -->
+	<param  name="robot_description" command="$(find xacro)/xacro --inorder '$(find mir_description)/urdf/mir_for_only_mir.urdf.xacro' 
+			prefix:=$(arg prefix) tf_prefix:=$(arg tf_prefix)" if="$(arg only_multi)"/>
+	
+	<param  name="robot_description" command="$(find xacro)/xacro --inorder '$(find mir_description)/urdf/mir_for_multi_mirs.urdf.xacro' 
+			prefix:=$(arg prefix) tf_prefix:=$(arg tf_prefix)" unless="$(arg only_multi)"/>
+    <!-- ******************************************************************************** -->
+
+</launch>

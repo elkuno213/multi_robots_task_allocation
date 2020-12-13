@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>manipulator</name>
+    <version>0.0.0</version>
+    <description>
+        URDF description, Gazebo simulation, moveit for the manipulator robot
+    </description>
+
+    <maintainer email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</maintainer>
+    <author email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</author>
+
+    <license>TODO</license>
+
+    <url type="website">https://github.com/huynhvuh/multi_robots_task_allocation</url>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <exec_depend>manipulator_description</exec_depend>
+    <exec_depend>manipulator_gazebo</exec_depend>
+    <exec_depend>manipulator_moveit_config</exec_depend>
+    <exec_depend>multi_manipulators</exec_depend>
+    <exec_depend>roboticsgroup_gazebo_plugins</exec_depend>
+
+    <export>
+        <metapackage/>
+    </export>
+</package>

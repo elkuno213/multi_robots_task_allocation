@@ -1,0 +1,9 @@
+<launch>
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="sim"             default="false"  doc="If true, bring up the fake depth camera."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+
+    <param name="robot_description"
+           command="$(find xacro)/xacro --inorder '$(find manipulator_description)/urdf/manipulator.urdf.xacro'
+           joint_limited:=$(arg joint_limited) gripper:=$(arg gripper) sim:=$(arg sim)"/>
+</launch>

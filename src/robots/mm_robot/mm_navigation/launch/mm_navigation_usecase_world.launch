@@ -1,0 +1,56 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="robot_name"      default="mm" />
+    <arg name="map_file"        default="$(find usecase_gazebo)/maps/map.yaml"/>
+    <arg name="initial_pose_x"  default="1.0"/>
+    <arg name="initial_pose_y"  default="1.0"/>
+    <arg name="initial_pose_a"  default="0.0"/>
+    <arg name="local_planner"   default="eband"/>
+    <arg name="open_rviz"       default="true"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- static_map_server -->
+    <!-- ******************************************************************************** -->
+    <node name="static_map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
+        <param name="frame_id" type="string" value="map"/>
+    </node>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Move Base -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find mm_navigation)/launch/mm_move_base.launch" >
+        <arg name="robot_name"      value="$(arg robot_name)"/>
+        <arg name="tf_prefix"       value="$(arg robot_name)_tf/" />
+        <arg name="local_planner"   value="$(arg local_planner)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- AMCL -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find mm_navigation)/launch/mm_amcl.launch" >
+        <arg name="robot_name"      value="$(arg robot_name)"/>
+        <arg name="tf_prefix"       value="$(arg robot_name)_tf/" />
+        <arg name="initial_pose_x"  value="$(arg initial_pose_x)"/>
+        <arg name="initial_pose_y"  value="$(arg initial_pose_y)"/>
+        <arg name="initial_pose_a"  value="$(arg initial_pose_a)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- rviz -->
+    <!-- ******************************************************************************** -->
+    <group if="$(arg open_rviz)"> 
+        <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find mm_navigation)/rviz/mm_navigation.rviz"/>
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

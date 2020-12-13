@@ -1,0 +1,38 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="robot_name"      default="robot" />
+
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="sim"             default="false" doc="If true, bring up the fake depth camera."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+    <arg name="debug"           default="false" />
+    <arg name="open_rviz"       default="true" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- BEGIN ROBOT-->
+    <!-- ******************************************************************************** -->
+    <group ns="$(arg robot_name)">
+        <rosparam command="load" file="$(find manipulator_moveit_config)/config/joint_names.yaml"/>
+
+        <include file="$(find manipulator_moveit_config)/launch/move_group.launch">
+            <arg name="joint_limited"   value="$(arg joint_limited)"/>
+            <arg name="sim"             value="$(arg sim)"/>
+            <arg name="gripper"         value="$(arg gripper)"/>
+            <arg name="debug"           default="$(arg debug)" />
+        </include>
+
+        <group if="$(arg open_rviz)"> 
+            <include file="$(find multi_manipulators)/launch/moveit_rviz_robot.launch">
+                <arg name="rviz_config"     value="true" />
+                <arg name="robot_name"      value="$(arg robot_name)" />
+            </include>
+        </group>
+
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

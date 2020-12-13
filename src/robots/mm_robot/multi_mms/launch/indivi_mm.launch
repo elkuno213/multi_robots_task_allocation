@@ -1,0 +1,65 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="joint_limited" default="true"/>
+    <arg name="gripper"       default="1"/>
+    <arg name="robot_name"    default="robot"/>
+    <arg name="pose_x"        default="1.0"/>
+    <arg name="pose_y"        default="1.0"/>
+    <arg name="pose_yaw"      default="0.0"/>
+    <arg name="local_planner" default="eband"/>
+    <arg name="map_file"      default="$(find usecase_gazebo)/maps/map.yaml"/>
+    <arg name="open_rviz"     default="false"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Individual model -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_mms)/launch/indivi_mm_gazebo.launch" >
+        <arg name="pose_x"          value="$(arg pose_x)" />
+        <arg name="pose_y"          value="$(arg pose_y)" />
+        <arg name="pose_yaw"        value="$(arg pose_yaw)" />
+        <arg name="joint_limited"   value="$(arg joint_limited)"  />
+        <arg name="gripper"         value="$(arg gripper)" />
+        <arg name="robot_name"      value="$(arg robot_name)" />
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Navigation -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_mms)/launch/indivi_mm_navigation.launch" >
+        <arg name="robot_name"      value="$(arg robot_name)" />
+        <arg name="map_file"        value="$(arg map_file)"/>
+        <arg name="initial_pose_x"  value="$(arg pose_x)"/>
+        <arg name="initial_pose_y"  value="$(arg pose_y)"/>
+        <arg name="initial_pose_a"  value="$(arg pose_yaw)"/>
+        <arg name="local_planner"   value="$(arg local_planner)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Manipulation -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_mms)/launch/indivi_mm_planning_execution.launch" >
+        <arg name="joint_limited"   value="$(arg joint_limited)"  />
+        <arg name="gripper"         value="$(arg gripper)" />
+        <arg name="robot_name"      value="$(arg robot_name)"/>
+        <arg name="open_rviz"       value="$(arg open_rviz)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Sequencer -->
+    <!-- ******************************************************************************** -->
+    <node name="$(arg robot_name)_sequencer" pkg="mrta" type="sequencer.py" output="screen">
+        <remap from="robot_mission"   to="$(arg robot_name)_mission" />
+    </node>
+    <!-- ******************************************************************************** -->
+
+</launch>

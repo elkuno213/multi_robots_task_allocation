@@ -1,0 +1,56 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="prefix"          default="mir_" />
+    <arg name="robot_name"      default="robot" />
+    <arg name="map_file"        default="$(find usecase_gazebo)/maps/map.yaml"/>
+    <arg name="initial_pose_x"  default="0.0"/>
+    <arg name="initial_pose_y"  default="0.0"/>
+    <arg name="initial_pose_a"  default="0.0"/>
+    <arg name="local_planner"   default="eband"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Navigation stack -->
+    <!-- ******************************************************************************** -->
+    <group ns="$(arg robot_name)">
+        <!-- Move Base -->
+        <include file="$(find mir_navigation)/launch/mir_move_base.launch" >
+            <arg name="prefix"          value="$(arg prefix)"/>
+            <arg name="robot_name"      value="$(arg robot_name)"/>
+
+            <arg name="b_scan_topic"    value="/$(arg robot_name)/mir/b_scan_rep117"/>
+            <arg name="f_scan_topic"    value="/$(arg robot_name)/mir/f_scan_rep117"/>
+            <arg name="cmd_vel_topic"   value="/$(arg robot_name)/mir_controller/cmd_vel"/>
+            <arg name="odom_comb_topic" value="/$(arg robot_name)/mir/odom_comb"/>
+            <arg name="marker_topic"    value="/$(arg robot_name)/move_base_node/DWBLocalPlanner/markers"/>
+
+            <arg name="local_planner"   value="$(arg local_planner)"/>
+        </include>
+
+
+
+        <!-- AMCL -->
+        <include file="$(find mir_navigation)/launch/mir_amcl.launch" >
+            <arg name="prefix"              value="$(arg prefix)"/>
+            <arg name="robot_name"          value="$(arg robot_name)"/>
+
+            <arg name="scan_topic"          value="/$(arg robot_name)/mir/scan"/>
+            <arg name="initialpose_topic"   value="/$(arg robot_name)/initialpose"/>
+            <arg name="amcl_pose_topic"     value="/$(arg robot_name)/amcl_pose"/>
+            <arg name="particlecloud_topic" value="/$(arg robot_name)/particlecloud"/>
+
+            <arg name="initial_pose_x"      value="$(arg initial_pose_x)"/>
+            <arg name="initial_pose_y"      value="$(arg initial_pose_y)"/>
+            <arg name="initial_pose_a"      value="$(arg initial_pose_a)"/>
+        </include>
+    </group>
+    <!-- ******************************************************************************** -->
+
+
+
+
+
+</launch>

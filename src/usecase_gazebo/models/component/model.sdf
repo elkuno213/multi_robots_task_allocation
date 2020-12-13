@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<sdf version ='1.4'>
+    <model name ='component'>
+        <static>false</static>
+        <link name='bottom'>
+            <gravity>true</gravity>
+            <collision name="component">
+                <geometry><box><size>0.14 0.06 0.02</size></box></geometry>
+            </collision>
+            <visual name="component">
+                <geometry><box><size>0.14 0.06 0.02</size></box></geometry>
+                <material><script><name>Gazebo/Blue</name></script></material>
+            </visual>
+        </link>
+    </model>
+</sdf>

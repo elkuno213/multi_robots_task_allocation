@@ -1,0 +1,35 @@
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="mm">
+
+    <xacro:arg name="prefix"         default="mm_"/>
+    <xacro:property name="prefix"    value="$(arg prefix)"/>
+
+    <xacro:macro name="mm_support" params="prefix">
+        <link name="${prefix}support_link">
+            <inertial>
+                <origin xyz="0 0 10" rpy="0 0 0" />
+                <mass value="0.005" />
+                <inertia
+                ixx="0.0005" ixy="0" ixz="0"
+                iyy="0.0005" iyz="0"
+                izz="0.0002" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://mm_description/meshes/mm_support/mm_support.stl" scale="0.001 0.001 0.001" />
+                    
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://mm_description/meshes/mm_support/mm_support.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="${prefix}support_link">
+            <material>Gazebo/Black</material>
+        </gazebo>
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,145 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="world_name"          default="$(find usecase_gazebo)/worlds/usecase.world"/>
+    <arg name="paused"              default="true" />
+    <arg name="gui"                 default="true" />
+
+    <arg name="robot_name"         default="robot"/>
+    <arg name="robot0_name"         default="robot0"/>
+    <arg name="robot1_name"         default="robot1"/>
+    <arg name="robot2_name"         default="robot2"/>
+    <arg name="robot3_name"         default="robot3"/>
+    <arg name="robot4_name"         default="robot4"/>
+    <arg name="robot5_name"         default="robot5"/>
+    <arg name="robot6_name"         default="robot6"/>
+    <arg name="robot7_name"         default="robot7"/>
+    <arg name="robot8_name"         default="robot8"/>
+    <arg name="robot9_name"         default="robot9"/>
+    <arg name="robot10_name"        default="robot10"/>
+    <arg name="prefix"              default="mir_" />
+
+    <arg name="map_file"            default="$(find usecase_gazebo)/maps/map.yaml"/>
+    <arg name="open_rviz"           default="false" doc="one rviz navigation for multi-robots"/> 
+    <!-- for rviz's robot_description -->
+    <param  name="robot_description" command="$(find xacro)/xacro --inorder '$(find mir_description)/urdf/mir_for_multi_mirs.urdf.xacro' prefix:=$(arg prefix)"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Gazebo node -->
+    <!-- ******************************************************************************** -->
+    <group>
+
+        <remap from="$(arg robot_name)/joint_states"                                to="$(arg robot_name)/mir/joint_states" />
+        <remap from="$(arg robot_name)/mir_controller/odom"                         to="$(arg robot_name)/mir/odom_comb" />
+        <remap from="$(arg robot_name)/imu_data"                                    to="$(arg robot_name)/mir/imu_data" />
+        <remap from="$(arg robot_name)/b_scan"                                      to="$(arg robot_name)/mir/b_scan" />
+        <remap from="$(arg robot_name)/f_scan"                                      to="$(arg robot_name)/mir/f_scan" />
+        <remap from="$(arg robot_name)/base_pose_ground_truth"                      to="$(arg robot_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot0_name)/joint_states"                               to="$(arg robot0_name)/mir/joint_states" />
+        <remap from="$(arg robot0_name)/mir_controller/odom"                        to="$(arg robot0_name)/mir/odom_comb" />
+        <remap from="$(arg robot0_name)/imu_data"                                   to="$(arg robot0_name)/mir/imu_data" />
+        <remap from="$(arg robot0_name)/b_scan"                                     to="$(arg robot0_name)/mir/b_scan" />
+        <remap from="$(arg robot0_name)/f_scan"                                     to="$(arg robot0_name)/mir/f_scan" />
+        <remap from="$(arg robot0_name)/base_pose_ground_truth"                     to="$(arg robot0_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot1_name)/joint_states"                               to="$(arg robot1_name)/mir/joint_states" />
+        <remap from="$(arg robot1_name)/mir_controller/odom"                        to="$(arg robot1_name)/mir/odom_comb" />
+        <remap from="$(arg robot1_name)/imu_data"                                   to="$(arg robot1_name)/mir/imu_data" />
+        <remap from="$(arg robot1_name)/b_scan"                                     to="$(arg robot1_name)/mir/b_scan" />
+        <remap from="$(arg robot1_name)/f_scan"                                     to="$(arg robot1_name)/mir/f_scan" />
+        <remap from="$(arg robot1_name)/base_pose_ground_truth"                     to="$(arg robot1_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot2_name)/joint_states"                               to="$(arg robot2_name)/mir/joint_states" />
+        <remap from="$(arg robot2_name)/mir_controller/odom"                        to="$(arg robot2_name)/mir/odom_comb" />
+        <remap from="$(arg robot2_name)/imu_data"                                   to="$(arg robot2_name)/mir/imu_data" />
+        <remap from="$(arg robot2_name)/b_scan"                                     to="$(arg robot2_name)/mir/b_scan" />
+        <remap from="$(arg robot2_name)/f_scan"                                     to="$(arg robot2_name)/mir/f_scan" />
+        <remap from="$(arg robot2_name)/base_pose_ground_truth"                     to="$(arg robot2_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot3_name)/joint_states"                               to="$(arg robot3_name)/mir/joint_states" />
+        <remap from="$(arg robot3_name)/mir_controller/odom"                        to="$(arg robot3_name)/mir/odom_comb" />
+        <remap from="$(arg robot3_name)/imu_data"                                   to="$(arg robot3_name)/mir/imu_data" />
+        <remap from="$(arg robot3_name)/b_scan"                                     to="$(arg robot3_name)/mir/b_scan" />
+        <remap from="$(arg robot3_name)/f_scan"                                     to="$(arg robot3_name)/mir/f_scan" />
+        <remap from="$(arg robot3_name)/base_pose_ground_truth"                     to="$(arg robot3_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot4_name)/joint_states"                               to="$(arg robot4_name)/mir/joint_states" />
+        <remap from="$(arg robot4_name)/mir_controller/odom"                        to="$(arg robot4_name)/mir/odom_comb" />
+        <remap from="$(arg robot4_name)/imu_data"                                   to="$(arg robot4_name)/mir/imu_data" />
+        <remap from="$(arg robot4_name)/b_scan"                                     to="$(arg robot4_name)/mir/b_scan" />
+        <remap from="$(arg robot4_name)/f_scan"                                     to="$(arg robot4_name)/mir/f_scan" />
+        <remap from="$(arg robot4_name)/base_pose_ground_truth"                     to="$(arg robot4_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot5_name)/joint_states"                               to="$(arg robot5_name)/mir/joint_states" />
+        <remap from="$(arg robot5_name)/mir_controller/odom"                        to="$(arg robot5_name)/mir/odom_comb" />
+        <remap from="$(arg robot5_name)/imu_data"                                   to="$(arg robot5_name)/mir/imu_data" />
+        <remap from="$(arg robot5_name)/b_scan"                                     to="$(arg robot5_name)/mir/b_scan" />
+        <remap from="$(arg robot5_name)/f_scan"                                     to="$(arg robot5_name)/mir/f_scan" />
+        <remap from="$(arg robot5_name)/base_pose_ground_truth"                     to="$(arg robot5_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot6_name)/joint_states"                               to="$(arg robot6_name)/mir/joint_states" />
+        <remap from="$(arg robot6_name)/mir_controller/odom"                        to="$(arg robot6_name)/mir/odom_comb" />
+        <remap from="$(arg robot6_name)/imu_data"                                   to="$(arg robot6_name)/mir/imu_data" />
+        <remap from="$(arg robot6_name)/b_scan"                                     to="$(arg robot6_name)/mir/b_scan" />
+        <remap from="$(arg robot6_name)/f_scan"                                     to="$(arg robot6_name)/mir/f_scan" />
+        <remap from="$(arg robot6_name)/base_pose_ground_truth"                     to="$(arg robot6_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot7_name)/joint_states"                               to="$(arg robot7_name)/mir/joint_states" />
+        <remap from="$(arg robot7_name)/mir_controller/odom"                        to="$(arg robot7_name)/mir/odom_comb" />
+        <remap from="$(arg robot7_name)/imu_data"                                   to="$(arg robot7_name)/mir/imu_data" />
+        <remap from="$(arg robot7_name)/b_scan"                                     to="$(arg robot7_name)/mir/b_scan" />
+        <remap from="$(arg robot7_name)/f_scan"                                     to="$(arg robot7_name)/mir/f_scan" />
+        <remap from="$(arg robot7_name)/base_pose_ground_truth"                     to="$(arg robot7_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot8_name)/joint_states"                               to="$(arg robot8_name)/mir/joint_states" />
+        <remap from="$(arg robot8_name)/mir_controller/odom"                        to="$(arg robot8_name)/mir/odom_comb" />
+        <remap from="$(arg robot8_name)/imu_data"                                   to="$(arg robot8_name)/mir/imu_data" />
+        <remap from="$(arg robot8_name)/b_scan"                                     to="$(arg robot8_name)/mir/b_scan" />
+        <remap from="$(arg robot8_name)/f_scan"                                     to="$(arg robot8_name)/mir/f_scan" />
+        <remap from="$(arg robot8_name)/base_pose_ground_truth"                     to="$(arg robot8_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot9_name)/joint_states"                               to="$(arg robot9_name)/mir/joint_states" />
+        <remap from="$(arg robot9_name)/mir_controller/odom"                        to="$(arg robot9_name)/mir/odom_comb" />
+        <remap from="$(arg robot9_name)/imu_data"                                   to="$(arg robot9_name)/mir/imu_data" />
+        <remap from="$(arg robot9_name)/b_scan"                                     to="$(arg robot9_name)/mir/b_scan" />
+        <remap from="$(arg robot9_name)/f_scan"                                     to="$(arg robot9_name)/mir/f_scan" />
+        <remap from="$(arg robot9_name)/base_pose_ground_truth"                     to="$(arg robot9_name)/mir/base_pose_ground_truth" />
+
+        <remap from="$(arg robot10_name)/joint_states"                              to="$(arg robot10_name)/mir/joint_states" />
+        <remap from="$(arg robot10_name)/mir_controller/odom"                       to="$(arg robot10_name)/mir/odom_comb" />
+        <remap from="$(arg robot10_name)/imu_data"                                  to="$(arg robot10_name)/mir/imu_data" />
+        <remap from="$(arg robot10_name)/b_scan"                                    to="$(arg robot10_name)/mir/b_scan" />
+        <remap from="$(arg robot10_name)/f_scan"                                    to="$(arg robot10_name)/mir/f_scan" />
+        <remap from="$(arg robot10_name)/base_pose_ground_truth"                    to="$(arg robot10_name)/mir/base_pose_ground_truth" />
+
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name"  value="$(arg world_name)"/>
+            <arg name="paused"      value="$(arg paused)" />
+            <arg name="gui"         value="$(arg gui)" />
+        </include>
+    </group>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- static_map_server -->
+    <!-- ******************************************************************************** -->
+    <node name="static_map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
+        <param name="frame_id" type="string" value="map"/>
+    </node>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- rviz -->
+    <!-- ******************************************************************************** -->
+    <group if="$(arg open_rviz)"> 
+        <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find multi_mirs_navigation)/rviz/multi_mirs_navigation.rviz"/>
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

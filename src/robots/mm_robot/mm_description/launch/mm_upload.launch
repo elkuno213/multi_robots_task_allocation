@@ -1,0 +1,15 @@
+<launch>
+
+       <arg name="only_multi"         default="true"      doc="true for only one mm / false for multiple mms"/>
+       <arg name="joint_limited"      default="true"      doc="If true, limits joint range [-PI, PI] on all joints."/>
+       <arg name="gripper"            default="1"         doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+       <arg name="tf_prefix"          default="" />
+
+       <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mm_description)/urdf/mm_for_only_mm.urdf.xacro'
+              tf_prefix:=$(arg tf_prefix) joint_limited:=$(arg joint_limited) gripper:=$(arg gripper)" if="$(arg only_multi)"/>
+
+       <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mm_description)/urdf/mm_for_multi_mms.urdf.xacro'
+              tf_prefix:=$(arg tf_prefix) joint_limited:=$(arg joint_limited) gripper:=$(arg gripper)" unless="$(arg only_multi)"/>
+
+
+</launch>

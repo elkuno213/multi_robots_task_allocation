@@ -1,0 +1,48 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="joint_limited"   default="true"/>
+    <arg name="gripper"         default="1"/>
+	<arg name="only_multi"      default="false"/>
+    <arg name="robot_name"      default="robot"/>
+    <arg name="tf_prefix"       default="$(arg robot_name)_tf/" />
+    <arg name="open_rviz"       default="false"/>
+    <arg name="debug"           default="false" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <group ns="$(arg robot_name)">
+        <!-- Joint names -->
+        <!-- ******************************************************************************** -->
+        <rosparam command="load" file="$(find mm_moveit_config)/config/joint_names.yaml" />
+        <!-- ******************************************************************************** -->
+
+        
+
+        <!-- Move Group -->
+        <!-- ******************************************************************************** -->
+        <include file="$(find mm_moveit_config)/launch/move_group.launch">
+            <arg name="joint_limited"   value="$(arg joint_limited)"/>
+            <arg name="gripper"         value="$(arg gripper)"/>
+	        <arg name="only_multi"      value="$(arg only_multi)"/>
+            <arg name="tf_prefix"       value="$(arg tf_prefix)" />
+            <arg name="debug"           default="$(arg debug)" />
+        </include>
+        <!-- ******************************************************************************** -->
+
+
+
+        <!-- Moveit -->
+        <!-- ******************************************************************************** -->
+        <group if="$(arg open_rviz)"> 
+            <include file="$(find multi_mms)/launch/moveit_rviz_robot.launch">
+                <arg name="rviz_config" value="true" />
+                <arg name="robot_name"  value="$(arg robot_name)"/>
+            </include>    
+        </group>
+        <!-- ******************************************************************************** -->
+    </group>
+
+</launch>

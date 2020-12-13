@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>roboticsgroup_gazebo_plugins</name>
+  <version>0.0.0</version>
+  <description>The multi_manipulators package</description>
+
+  <maintainer email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</maintainer>
+  <author email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</author>
+
+  <license>TODO</license>
+
+  <url type="website">https://github.com/huynhvuh/multi_robots_task_allocation</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>control_toolbox</build_depend>
+
+
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>control_toolbox</exec_depend>
+
+
+  <export>
+    <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" />
+  </export>
+</package>

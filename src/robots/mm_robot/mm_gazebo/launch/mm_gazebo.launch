@@ -1,0 +1,113 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="pose_x"          default="0.0" />
+    <arg name="pose_y"          default="0.0" />
+    <arg name="pose_yaw"        default="0.0" />
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+
+    <arg name="only_multi"      default="true" doc="true for only one mm / false for multiple mms"/>
+
+    <arg name="robot_name"      default="robot" />
+    <arg name="tf_prefix"       default="$(arg robot_name)_tf/" />  <!-- for diffdrive_controller and imu_frame : $(arg robot_name)_tf/ -->
+    <param name="tf_prefix"     value="$(arg robot_name)_tf" />     <!-- for robot state publisher, diffdrive_controller, ekf localization and gpu laser (sick_s300) : $(arg robot_name)_tf -->
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Load and spawn URDF -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find mm_description)/launch/mm_upload.launch">
+        <arg name="only_multi"          value="$(arg only_multi)" />
+        <arg name="tf_prefix"           value="$(arg tf_prefix)" />
+        <arg name="joint_limited"       value="$(arg joint_limited)"/>
+        <arg name="gripper"             value="$(arg gripper)"/>
+    </include>
+
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+          args="-urdf -param robot_description -model $(arg robot_name)
+          -J arm_shoulder_pan_joint 0 -J arm_shoulder_lift_joint -1.5707 -J arm_elbow_joint 0
+          -J arm_wrist_1_joint 0 -J arm_wrist_1_joint -1.5707 -J arm_wrist_1_joint 0 
+          -x $(arg pose_x) -y $(arg pose_y) -Y $(arg pose_yaw)"
+          respawn="false" output="screen"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Add passive + mimic joints to joint_states topic -->
+    <!-- ******************************************************************************** -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <rosparam param="source_list">[mir/joint_states]</rosparam>
+        <param name="rate" value="200.0" />
+    </node>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Robot state publisher -->
+    <!-- ******************************************************************************** -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+    <!-- ******************************************************************************** -->
+
+
+
+
+    <!-- Fake Calibration -->
+    <!-- ******************************************************************************** -->
+    <node pkg="rostopic" type="rostopic" name="fake_joint_calibration" args="pub /calibrated std_msgs/Bool true" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Load ros_control controller configurations and start the controllers -->
+    <!-- ******************************************************************************** -->
+    <rosparam file="$(find mm_description)/config/joint_state_controller.yaml" command="load"/>
+    <rosparam file="$(find mm_description)/config/mm_controller.yaml" command="load" subst_value="true"/>
+    
+    <node   name="joint_state_controller_spawner" pkg="controller_manager" type="spawner"
+            args="joint_state_controller" respawn="false" output="screen"/>
+    <node   name="mir_controller_spawner" pkg="controller_manager" type="spawner"
+            args="mir_controller" output="screen"/>    
+    <node   name="arm_controller_spawner" pkg="controller_manager" type="controller_manager"
+            args="spawn arm_controller" respawn="false" output="screen"/>
+    <node   name="gripper_controller_spawner" pkg="controller_manager" type="controller_manager"
+            args="spawn gripper_controller" respawn="false" output="screen"
+            if="$(eval gripper == 1)"/>
+    <node   name="joint_group_position_controller_spawner" pkg="controller_manager" type="controller_manager"
+            args="load joint_group_position_controller" respawn="false" output="screen"  />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- MIR observation data -->
+    <!-- ******************************************************************************** -->
+    <group ns="mir">
+
+        <!-- create combined scan topic (like on real MiR) -->
+        <node pkg="topic_tools" type="relay" name="b_scan_relay" args="b_scan scan" />
+        <node pkg="topic_tools" type="relay" name="f_scan_relay" args="f_scan scan" />
+
+        <node name="b_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen" >
+            <remap from="scan" to="b_scan" />
+            <remap from="scan_filtered" to="b_scan_rep117" />
+        </node>
+
+        <node name="f_rep117_laser_filter" pkg="mir_driver" type="rep117_filter.py" output="screen" >
+            <remap from="scan" to="f_scan" />
+            <remap from="scan_filtered" to="f_scan_rep117" />
+        </node>
+
+
+        <!-- EKF node -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" clear_params="true" output="screen" >
+            <rosparam command="load" file="$(find mm_gazebo)/config/ekf.yaml" subst_value="true" />
+        </node>
+
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

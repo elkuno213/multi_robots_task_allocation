@@ -1,0 +1,53 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="world_name"      default="worlds/empty.world"/>
+    <arg name="paused"          default="true"  doc="Starts gazebo in paused mode"/>
+    <arg name="gui"             default="true"  doc="Starts gazebo gui"/>
+
+    <arg name="pose_x"          default="0.0" />
+    <arg name="pose_y"          default="0.0" />
+    <arg name="pose_yaw"        default="0.0" />
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+
+    <arg name="robot_name"      default="robot" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Gazebo node -->
+    <!-- ******************************************************************************** -->
+    <group>
+        <remap from="joint_states"                          to="mir/joint_states" />
+        <remap from="/mir_controller/odom"                  to="mir/odom_comb" />
+        <remap from="b_scan"                                to="mir/b_scan" />
+        <remap from="f_scan"                                to="mir/f_scan" />
+        <remap from="imu_data"                              to="mir/imu_data" />
+        <remap from="base_pose_ground_truth"                to="mir/base_pose_ground_truth" />
+
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name"  value="$(arg world_name)" />
+            <arg name="paused"      value="$(arg paused)" />
+            <arg name="gui"         value="$(arg gui)" />
+        </include>
+    </group>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Load and spawn URDF -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find mm_gazebo)/launch/mm_gazebo.launch">
+        <arg name="pose_x"          value="$(arg pose_x)" />
+        <arg name="pose_y"          value="$(arg pose_y)" />
+        <arg name="pose_yaw"        value="$(arg pose_yaw)" />
+        <arg name="joint_limited"   value="$(arg joint_limited)" />
+        <arg name="gripper"         value="$(arg gripper)" />
+        <arg name="only_multi"      value="true" />
+        <arg name="robot_name"      value="$(arg robot_name)" />
+    </include>
+    <!-- ******************************************************************************** -->
+
+</launch>

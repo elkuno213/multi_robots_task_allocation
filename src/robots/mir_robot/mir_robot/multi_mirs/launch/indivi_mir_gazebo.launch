@@ -1,0 +1,28 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="pose_x"        default="1.0"/>
+    <arg name="pose_y"        default="1.0"/>
+    <arg name="pose_yaw"      default="0.0"/>
+    <arg name="prefix"        default="mir_" />
+    <arg name="robot_name"    default="robot"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- BEGIN ROBOT-->
+    <!-- ******************************************************************************** -->
+    <group ns="$(arg robot_name)">
+        <include file="$(find mir_gazebo)/launch/mir_gazebo.launch" >
+            <arg name="pose_x"      value="$(arg pose_x)" />
+            <arg name="pose_y"      value="$(arg pose_y)" />
+            <arg name="pose_yaw"    value="$(arg pose_yaw)" />
+            <arg name="only_multi"  value="false"/>
+            <arg name="robot_name"  value="$(arg robot_name)" />
+            <arg name="prefix"      value="$(arg prefix)"/>
+        </include>
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

@@ -1,0 +1,63 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="robot_name"      default="robot" />
+
+    <arg name="pose_x"          default="0" />
+    <arg name="pose_y"          default="0" />
+    <arg name="pose_z"          default="0.5" />
+    <arg name="pose_yaw"        default="0" />
+
+    <arg name="joint_limited"   default="true" doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="sim"             default="false" doc="If true, bring up the fake depth camera."/>
+    <arg name="gripper"         default="1" doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Load and spawn URDF -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find manipulator_description)/launch/manipulator_upload.launch">
+        <arg name="joint_limited"   value="$(arg joint_limited)"/>
+        <arg name="sim"             value="$(arg sim)"/>
+        <arg name="gripper"         value="$(arg gripper)"/>
+    </include>
+
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+          args="-urdf -param robot_description -model $(arg robot_name)
+          -J arm_shoulder_lift_joint -1.57079632679
+          -J arm_wrist_1_joint -1.57079632679
+          -x $(arg pose_x) -y $(arg pose_y) -z $(arg pose_z) -Y $(arg pose_yaw)"
+          respawn="false" output="screen"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Robot state publisher -->
+    <!-- ******************************************************************************** -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Fake Calibration -->
+    <!-- ******************************************************************************** -->
+    <node pkg="rostopic" type="rostopic" name="fake_joint_calibration" args="pub /calibrated std_msgs/Bool true" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Load ros_control controller configurations and start the controllers -->
+    <!-- ******************************************************************************** -->
+    <rosparam file="$(find manipulator_gazebo)/config/joint_state_controller.yaml" command="load"/>
+    <rosparam file="$(find manipulator_gazebo)/config/manipulator_controller.yaml" command="load"/>
+    
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+    <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
+    <node name="gripper_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn gripper_controller" respawn="false" output="screen" if="$(eval gripper == 1)"/>
+    <!-- ******************************************************************************** -->
+
+</launch>

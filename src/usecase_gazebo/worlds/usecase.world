@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+    <world name="usecase">
+        
+        <!-- Load the sun -->
+        <include>
+            <uri>model://sun</uri>
+        </include>
+
+        <!-- Load ground plane -->
+        <include>
+            <uri>model://ground_plane</uri>
+        </include>
+
+        <!-- Load usecase -->
+        <include>
+            <uri>model://usecase</uri>
+        </include>
+
+        <!-- GUI -->
+        <gui fullscreen='0'>
+            <camera name='user_camera'>
+                <pose frame=''>6.709306 -4.390283 19.288023 -0.000001 1.054001 1.567999</pose>
+                <view_controller>orbit</view_controller>
+                <projection_type>perspective</projection_type>
+            </camera>
+        </gui>
+
+        <!-- SCENE -->
+        <scene>
+            <shadows>0</shadows>
+        </scene>
+    </world>
+</sdf>

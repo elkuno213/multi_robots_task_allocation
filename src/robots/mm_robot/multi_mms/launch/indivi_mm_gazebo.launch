@@ -1,0 +1,30 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="pose_x"          default="1.0"/>
+    <arg name="pose_y"          default="1.0"/>
+    <arg name="pose_yaw"        default="0.0"/>
+    <arg name="joint_limited"   default="true"  doc="If true, limits joint range [-PI, PI] on all joints."/>
+    <arg name="gripper"         default="1"     doc="Spawn gripper or not. 0 - no, 1 - yes"/>
+    <arg name="robot_name"      default="robot" />
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- BEGIN ROBOT-->
+    <!-- ******************************************************************************** -->
+    <group ns="$(arg robot_name)">
+        <include file="$(find mm_gazebo)/launch/mm_gazebo.launch" >
+            <arg name="pose_x"          value="$(arg pose_x)" />
+            <arg name="pose_y"          value="$(arg pose_y)" />
+            <arg name="pose_yaw"        value="$(arg pose_yaw)" />
+            <arg name="joint_limited"   value="$(arg joint_limited)"  />
+            <arg name="gripper"         value="$(arg gripper)" />
+            <arg name="only_multi"      value="false"/>
+            <arg name="robot_name"      value="$(arg robot_name)" />
+        </include>
+    </group>
+    <!-- ******************************************************************************** -->
+
+</launch>

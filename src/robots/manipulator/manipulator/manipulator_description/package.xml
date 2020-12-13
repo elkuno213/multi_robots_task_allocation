@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>manipulator_description</name>
+    <version>0.0.0</version>
+    <description>The manipulator_description package</description>
+
+	<maintainer email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</maintainer>
+	<author email="vuhoi.huynh@gmail.com">Vu Hoi HUYNH</author>
+
+	<license>TODO</license>
+
+	<url type="website">https://github.com/huynhvuh/multi_robots_task_allocation</url>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <exec_depend>urdf</exec_depend>
+    <exec_depend>xacro</exec_depend>
+
+    <export>
+    </export>
+</package>

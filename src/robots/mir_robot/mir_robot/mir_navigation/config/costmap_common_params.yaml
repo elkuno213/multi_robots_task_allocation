@@ -1,0 +1,44 @@
+robot_base_frame: $(arg base_frame_id)
+transform_tolerance: 0.4
+update_frequency: 5.0
+publish_frequency: 1.0
+obstacle_range: 3.0
+#mark_threshold: 1
+publish_voxel_map: true
+navigation_map:
+  map_topic: $(arg global_frame_id)
+  subscribe_to_updates: true
+obstacles:
+  observation_sources: b_scan_marking b_scan_clearing f_scan_marking f_scan_clearing
+  b_scan_marking:
+    topic: $(arg b_scan_topic)
+    data_type: LaserScan
+    clearing: false
+    marking: true
+    inf_is_valid: false
+    min_obstacle_height: 0.13
+    max_obstacle_height: 0.25
+  b_scan_clearing:
+    topic: $(arg b_scan_topic)
+    data_type: LaserScan
+    clearing: true
+    marking: false
+    inf_is_valid: false
+    min_obstacle_height: 0.13
+    max_obstacle_height: 0.25
+  f_scan_marking:
+    topic: $(arg f_scan_topic)
+    data_type: LaserScan
+    clearing: false
+    marking: true
+    inf_is_valid: false
+    min_obstacle_height: 0.13
+    max_obstacle_height: 0.25
+  f_scan_clearing:
+    topic: $(arg f_scan_topic)
+    data_type: LaserScan
+    clearing: true
+    marking: false
+    inf_is_valid: false
+    min_obstacle_height: 0.13
+    max_obstacle_height: 0.25

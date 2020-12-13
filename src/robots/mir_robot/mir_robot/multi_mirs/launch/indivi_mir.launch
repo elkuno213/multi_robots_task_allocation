@@ -1,0 +1,53 @@
+<launch>
+
+    <!-- Arguments and Parameters -->
+    <!-- ******************************************************************************** -->
+    <arg name="prefix"        default="mir_" />
+    <arg name="robot_name"    default="robot"/>
+    <arg name="pose_x"        default="1.0"/>
+    <arg name="pose_y"        default="1.0"/>
+    <arg name="pose_yaw"      default="0.0"/>
+    <arg name="local_planner" default="eband"/>
+    <arg name="map_file"      default="$(find usecase_gazebo)/maps/map.yaml"/>
+    <arg name="open_rviz"     default="true"/>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Individual model -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_mirs)/launch/indivi_mir_gazebo.launch" >
+        <arg name="pose_x"      value="$(arg pose_x)" />
+        <arg name="pose_y"      value="$(arg pose_y)" />
+        <arg name="pose_yaw"    value="$(arg pose_yaw)" />
+        <arg name="robot_name"  value="$(arg robot_name)" />
+        <arg name="prefix"      value="$(arg prefix)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- Navigation -->
+    <!-- ******************************************************************************** -->
+    <include file="$(find multi_mirs)/launch/indivi_mir_navigation.launch" >
+        <arg name="robot_name"      value="$(arg robot_name)" />
+        <arg name="prefix"          value="$(arg prefix)" />
+        <arg name="map_file"        value="$(arg map_file)"/>
+        <arg name="initial_pose_x"  value="$(arg pose_x)"/>
+        <arg name="initial_pose_y"  value="$(arg pose_y)"/>
+        <arg name="initial_pose_a"  value="$(arg pose_yaw)"/>
+        <arg name="local_planner"   value="$(arg local_planner)"/>
+    </include>
+    <!-- ******************************************************************************** -->
+
+
+
+    <!-- rviz -->
+    <!-- ******************************************************************************** -->
+    <group if="$(arg open_rviz)"> 
+        <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find multi_mirs)/rviz/indivi_$(arg robot_name)_navigation.rviz" ns="$(arg robot_name)"/>
+    </group>
+    <!-- ******************************************************************************** -->
+
+
+</launch>
