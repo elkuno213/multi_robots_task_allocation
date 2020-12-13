@@ -56,7 +56,7 @@
 	git status
 	git add .
 	git commit -m "1st commit"
-	git remote add master https://github.com/huynhvuh/multi_robots_task_allocation.git
+	git remote add origin https://github.com/huynhvuh/multi_robots_task_allocation.git
 	git remote -v
 	git push origin master
 
