@@ -1,0 +1,241 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------
+0) Ubuntu LTS 18.04
+
+- Install Ubuntu by following these two links: 	
+    https://ubuntu.com/download/desktop
+    https://www.youtube.com/watch?v=u5QyjHIYwTQ
+
+- username=hvh
+
+	sudo apt-get install apt-file
+	sudo apt-file update
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+1) Visual Studio Code
+
+- Install vscode by following this link :
+    https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/
+
+- Fix error 'multiple times' :
+    sudo rm /etc/apt/sources.list.d/vscode.list
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+2) Latex VSCode
+
+- Install texlive-full
+    sudo apt-get install texlive-full
+	
+- Add extension VScode -> Latex Workshop extension
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+3) Oh My Zsh
+
+- Install Oh My Zsh by following this link :
+    https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+4) Github
+
+- Command-lines:
+	git init
+
+	git status
+	git add .
+	git commit -m "1st commit"
+	git remote add master https://github.com/huynhvuh/multi_robots_task_allocation.git
+	git remote -v
+	git push origin master
+
+	git clone https://github.com/huynhvuh/multi_robots_task_allocation.git
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+5) Miniconda env = MRTA
+
+- Install Miniconda by following these two links:
+    https://docs.conda.io/en/latest/miniconda.html
+    https://conda.io/projects/conda/en/latest/user-guide/install/linux.html
+
+- Create MRTA env:
+    conda create -n MRTA python=2.7
+
+- Install required packages:
+    conda install -c conda-forge rospkg -n MRTA
+    conda install -c sotte empy -n MRTA
+    conda install -c conda-forge defusedxml -n MRTA
+    conda install -c miniconda numpy -n MRTA
+    conda install -c miniconda pyqtgraph -n MRTA
+    conda install -c miniconda yaml -n MRTA
+    conda install -c miniconda pycryptodomex -n MRTA (for fake_joint_calibration)
+    conda install -c conda-forge python-gnupg -n MRTA (for fake_joint_calibration)
+    conda install -c conda-forge matplotlib -n MRTA
+
+- Add activation to .bashrc/.zshrc:
+    If bash:
+        echo "conda activate MRTA" >> ~/.bashrc
+    If zsh:
+        echo "conda activate MRTA" >> ~/.zshrc
+
+- Add shebang to python files:
+    #!/home/hvh/miniconda3/envs/MRTA/bin/python
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+6) ROS Melodic
+
+- Install ROS by following this link :
+    http://wiki.ros.org/melodic/Installation/Ubuntu
+
+- Uninstall ROS :
+    bash
+    sudo apt-get remove ros-*
+    sudo apt-get autoremove
+
+- Uninstall Gazebo :
+    bash
+    sudo apt-get remove gazebo9
+    sudo apt-get autoremove
+
+- Create MRTA_ws
+    mkdir ~/MRTA_ws
+    cd ~/MRTA_ws/
+
+- Clone repository into workspace
+    git clone https://github.com/huynhvuh/multi_robots_task_allocation.git
+    chmod -R a+rX *
+
+- Use rosdep to install all dependencies
+    rosdep update
+    rosdep install --from-paths src --ignore-src --rosdistro melodic -y
+
+- Build workspace
+    catkin_make
+
+- Echo source to ".bashrc" file
+    echo "source ~/MRTA_ws/devel/setup.bash" >> ~/.bashrc
+- Or to ".zshrc" file
+    echo "source ~/MRTA_ws/devel/setup.zsh" >> ~/.zshrc
+
+- Fix error '[Err] [REST.cc:205] Error in REST request':
+    inside file '.ignition/fuel/config.yaml':	replace 'url: https://api.ignitionfuel.org' by 'url: https://api.ignitionrobotics.org'
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+7) Universal Robot
+
+- Git clone:
+    https://github.com/olinrobotics/universal_robot
+
+- Source-install of "assimp" package to fix error of "failed to import assimp" of "moveit_commander"
+    conda activate MRTA
+    git clone https://github.com/assimp/assimp.git
+    cd ./assimp
+    mkdir build && cd build
+    cmake .. -G 'Unix Makefiles'
+    make -j4
+    cd ..
+    cd ./port/PyAssimp
+    python setup.py install
+
+- Fix warning '#include <class_loader/class_loader.h>' in file 'universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp' of 'ur_kinematics' package:
+    Replace by '#include <class_loader/class_loader.hpp>' 
+
+- Fix error 'hardware_interface' of 'ur_modern_driver':
+    https://github.com/iron-ox/ur_modern_driver/commit/883070d0b6c0c32b78bb1ca7155b8f3a1ead416c?diff=split
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+8) Gripper "robotiq_2finger_grippers"
+
+- Git clone:
+    https://github.com/olinrobotics/robotiq_2finger_grippers
+    https://github.com/mgruhler/soem.git (Maybe)
+    https://github.com/ros-industrial/ros_canopen/tree/melodic-devel/socketcan_interface (Maybe)
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+9) Additional packages
+
+- Openni camera:
+    git clone https://github.com/ros-drivers/openni_camera.git
+
+    Fix 'error: expected constructor, destructor, or type conversion before ‘(’ token PLUGINLIB_REGISTER_CLASS(sensor_filter/FootprintFilter, sensor_filter::FootprintFilter, filters::FilterBase<sensor_msgs::LaserScan>)'
+        Replace in 'common-sensors-master/common_sensors/src/filters.cpp' :
+            PLUGINLIB_REGISTER_CLASS(sensor_filter/FootprintFilter, sensor_filter::FootprintFilter, filters::FilterBase<sensor_msgs::LaserScan>)
+            PLUGINLIB_REGISTER_CLASS(sensor_filter/NanToInfFilter, sensor_filter::NanToInfFilter, filters::FilterBase<sensor_msgs::LaserScan>)
+        By:
+            PLUGINLIB_EXPORT_CLASS(sensor_filter::FootprintFilter, filters::FilterBase<sensor_msgs::LaserScan>)
+            PLUGINLIB_EXPORT_CLASS(sensor_filter::NanToInfFilter, filters::FilterBase<sensor_msgs::LaserScan>)	
+
+- Robot localization:
+    git clone https://github.com/cra-ros-pkg/robot_localization.git
+
+- Common sensors:
+    git clone https://github.com/JenniferBuehler/common-sensors.git
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+10) Multi Machines configurations
+
+- Install ssh
+    sudo apt install ssh
+
+- Multi machines
+    PC master 
+        hostname -I (Ex : 10.191.76.93)
+        Inside file ".zshrc" / ".bashrc" :	
+            export ROS_IP=10.191.76.93
+            export ROS_MASTER_URI=http://10.191.76.93:11311
+
+    Other PC
+        hostname -I (Ex : 10.191.76.59)
+        Inside file ".zshrc" / ".bashrc" :	
+            export ROS_IP=10.191.76.59
+            export ROS_MASTER_URI=http://10.191.76.93:11311
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+11) Multi UR5 github
+
+    https://github.com/olinrobotics/HIRo/wiki/MoveIt!-for-Xamyab
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+12) Run multiple AGV robots in simulated usecase and task-allocation algorithm
+
+	roslaunch usecase_gazebo usecase_world_for_multi_mms.launch paused:="false"  
+    roslaunch multi_mms indivi_mm.launch robot_name:="robot0" pose_x:="1" pose_y:="1"
+    roslaunch multi_mms indivi_mm.launch robot_name:="robot`" pose_x:="1" pose_y:="2"
+    python src/mrta/scripts/MRTA_algorithm.py 
+---------------------------------------------------------------------------------------------------------------------------------------------------
