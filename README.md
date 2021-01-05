@@ -127,7 +127,7 @@ roslaunch usecase_gazebo usecase_world_for_multi_mms.launch paused:="false"
 roslaunch multi_mms indivi_mm.launch robot_name:="robot0" pose_x:="1" pose_y:="1"
 roslaunch multi_mms indivi_mm.launch robot_name:="robot`" pose_x:="1" pose_y:="2"
 
-### Run task-allocation algorithm (2 products to manufacture)
+### Run mission planning algorithm (2 products to manufacture)
 python src/mrta/scripts/MRTA_algorithm.py 
 ```
 
