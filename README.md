@@ -82,6 +82,7 @@ cd ./port/PyAssimp
 python setup.py install
 
 ### Build workspace
+cd ~/MRTA_ws/
 catkin_make
 
 ### Echo source to ".bashrc" file
