@@ -95,6 +95,21 @@
 
 - Add shebang to python files:
     #!/home/hvh/miniconda3/envs/MRTA/bin/python
+    
+- Fully uninstall conda:
+    + Remove all conda-related files and directories using the Anaconda-Clean package
+        conda activate your_conda_env_name
+        conda install anaconda-clean
+        anaconda-clean # add `--yes` to avoid being prompted to delete each one
+    + Remove your entire conda directory
+        rm -rf ~/miniconda3
+    + Remove the line which adds the conda path to the PATH environment variable
+        vi ~/.bashrc
+        # -> Search for conda and delete the lines containing it
+        # -> If you're not sure if the line belongs to conda, comment it instead of deleting it just to be safe
+        source ~/.bashrc
+    + Remove the backup folder created by the the Anaconda-Clean package
+        rm -rf ~/.anaconda_backup
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
