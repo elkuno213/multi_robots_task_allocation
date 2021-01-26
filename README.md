@@ -3,7 +3,7 @@
 
 The [Corot Project](http://www.corot-project.org/), funded by the European Commission Interreg France-Channel-England Program, aims to improve the design of flexible and responsive manufacturing systems involving autonomous Collaborative Robots (CoRoT). 
 
-My MRTA project, as a part of the CoRot, is built at the laboratory [LINEACT EA 7527](https://recherche.cesi.fr/) with objective to construct a ROS-Melodic-based system of multiple AGV Robots assembled by MIR100 robot, UR5 robot and Robotiq 2F 140 Gripper. This system is controlled by a supervisor system, which contains a mission planning algorithm
+My MRTA project, as a part of the CoRot, is built at the laboratory [LINEACT EA 7527](https://recherche.cesi.fr/) with objective to construct a ROS-Melodic-based system of multiple AGV Robots assembled by [MIR100](https://www.mobile-industrial-robots.com/en/solutions/robots/mir100/) robot, [UR5](https://www.universal-robots.com/products/ur5-robot/) robot and [Robotiq 2F 140](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) Gripper. This system is controlled by a supervisor system, which contains a [mission planning algorithm](https://github.com/huynhvuh/multi_robots_task_allocation/blob/master/src/mrta/scripts/MRTA_algorithm.py) developped based on the theory of [Genetic Algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm).
 
 
 Package overview
