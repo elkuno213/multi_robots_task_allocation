@@ -1,4 +1,4 @@
-multi_robots_task_allocation
+[Corot Project](http://www.corot-project.org/): Multi Robots Task Allocation
 ==========
 
 ROS Melodic support for a system of multiple AGV Robots assembled by MIR100 robot, UR5 robot and Robotiq 2F 140 Gripper. This system is controlled by a supervisor system, which contains a mission planning algorithm
