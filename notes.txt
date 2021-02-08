@@ -58,7 +58,10 @@
 	git commit -m "1st commit"
 	git remote add origin https://github.com/huynhvuh/multi_robots_task_allocation.git
 	git remote -v
-	git push origin master
+	git fetch origin master:tmp
+	git rebase tmp
+	git push origin HEAD:master
+	git branch -D tmp
 
 	git clone https://github.com/huynhvuh/multi_robots_task_allocation.git
 ---------------------------------------------------------------------------------------------------------------------------------------------------
